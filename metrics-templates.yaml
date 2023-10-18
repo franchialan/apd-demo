@@ -1,0 +1,23 @@
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: error-rate
+  namespace: test
+spec:
+  provider:
+    address: http://prometheus.istio-system:9090
+    type: prometheus
+  query: |
+    100 - rate(
+      http_requests_total{
+        namespace="test",
+        app="podinfo",
+        status!~"5.*"
+      }[{{ interval }}]) 
+    / 
+    rate(
+      http_requests_total{
+        namespace="test",
+        app="podinfo",
+      }[{{ interval }}]
+    ) * 100
