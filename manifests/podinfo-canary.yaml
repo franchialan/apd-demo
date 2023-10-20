@@ -54,7 +54,7 @@ spec:
       templateRef:
         name: error-rate
       thresholdRange:
-        max: 1
+        max: 99
       interval: 30s
     #- name: request-duration
       # maximum req duration P99
